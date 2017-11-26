@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Socket.IO Example</title>
+  </head>
+  <body>
+    <h1>Socket.IO Example</h1>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script> -->
+    <script src="./socket.io/socket.io.js"></script>
+    <script>
+      var socket = io.connect('http://127.0.0.1:1234');
+      socket.on("message",(msg)=>{
+      	console.log("[message]: " + msg);
+      });
+
+      socket.on("connect",()=>{
+          // alert("succ:"+socket.id);
+      });
+
+      socket.on("disconnect",()=>{
+          // alert("disconnect");
+          console.log("disconnect");
+      });
+    </script>
+
+  </body>
+</html>
