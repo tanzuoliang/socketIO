@@ -1,5 +1,9 @@
 "use strict"
-let io = require("socket.io")(1234);
+// let io = require("socket.io")(1234);
+let io = require("socket.io")(1234,{
+	pingInterval: 10000,
+  	pingTimeout: 5000,
+});
 let socketMap = new Map();
 io.on('connection',(socket)=>{
 	console.log(socket.id);
