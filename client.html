@@ -9,20 +9,45 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
     <!-- <script src="./socket.io/socket.io.js"></script> -->
     <script>
+     console.log("-------------------------start app----------------------------------------");
       // var socket = io.connect('http://127.0.0.1:1234');
       var socket = io.connect('http://192.168.0.125:1234');
+
+      var intervalId = -1;
+
       socket.on("message",(msg)=>{
       	console.log("[message]: " + msg);
       });
 
       socket.on("connect",()=>{
-          // alert("succ:"+socket.id);
+        //alert("connect succ");
+        console.log("connect connect_succ");
+        intervalId = setInterval(()=>socket.emit("message","data:"  + Math.random()),50);
       });
+
+      socket.on('reconnect',()=>console.log("reconnect succ"));
 
       socket.on("disconnect",()=>{
           // alert("disconnect");
           console.log("disconnect");
+          clearInterval(intervalId);
+          intervalId = setInterval(()=>socket.emit("message","data:"  + Math.random()));
       });
+
+      socket.on('error',()=>console.log("error"));
+
+      socket.on('connect_failed',()=>console.log("connect connect_failed"));
+
+      socket.on('connect_error',()=>console.log("connect connect_error"));
+      socket.on('connect_timeout',()=>console.log("connect connect_timeout"));
+
+      socket.on('reconnect_attempt',()=>console.log("connect reconnect_attempt"));
+      socket.on('reconnecting',()=>console.log("connect reconnecting"));
+      socket.on('reconnect_error',()=>console.log("connect reconnect_error"));
+      socket.on('reconnect_failed',()=>console.log("connect reconnect_failed"));
+
+      socket.on('pong',(data)=>console.log("connect pong:" + (data?data:"none")));
+      // socket.on('ping',()=>console.log("connect ping:" + Date.now()));
     </script>
 
   </body>
